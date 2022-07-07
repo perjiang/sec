@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,11 +23,17 @@ import org.springframework.web.filter.OncePerRequestFilter;
  * @Date 2022/7/7 16:30
  */
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig  {
     @Autowired
     AuthenticationConfiguration authenticationConfiguration;
     @Autowired
     JwtAuthenticationTokenFilter JwtAuthenticationTokenFilter;
+    @Autowired
+    MyAccessDeniedHandler myAccessDeniedHandler;
+    @Autowired
+    MyAuthenticationEntryPoint myAuthenticationEntryPoint;
 
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
@@ -47,6 +55,10 @@ public class SecurityConfig  {
                 .anyRequest().authenticated();
         http
                 .addFilterBefore(JwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http
+                .exceptionHandling()
+                .authenticationEntryPoint(myAuthenticationEntryPoint)
+                .accessDeniedHandler(myAccessDeniedHandler);
         return http.build();
 
     }

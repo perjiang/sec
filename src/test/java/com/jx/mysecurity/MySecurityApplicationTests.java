@@ -18,8 +18,9 @@ class MySecurityApplicationTests {
     private PasswordEncoder bCryptPasswordEncoder;
 
     @Test
-    void contextLoads() {
-        System.out.println(bCryptPasswordEncoder.encode("123456"));
+    void contextLoads(){
+        SysUser admin = sysUserMapper.selectSysUserByUserName("admin");
+        System.out.println(admin);
     }
 
 }

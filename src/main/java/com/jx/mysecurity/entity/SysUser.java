@@ -1,5 +1,6 @@
 package com.jx.mysecurity.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,6 @@ import java.util.List;
  * @Date 2022/7/7 16:25
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @TableName("user")
@@ -25,4 +25,9 @@ public class SysUser {
     private int id;
     private String username;
     private String password;
+
+    @TableField(exist = false)
+    private List<SysRole> rolesList;
+
+    public SysUser(){}
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -44,7 +45,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
         Gson gson = new Gson();
         LoginUser loginUser = gson.fromJson(res, LoginUser.class);
-        Collection<GrantedAuthority> authorities = loginUser.getAuthorities();
+        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) loginUser.getAuthorities();
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginUser,null,authorities);
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         filterChain.doFilter(request,response);
