@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/securitydb
+    username: root
+    password: root
+  redis:
+    host: localhost
+    username: root
+    password: root
+    port: 6379
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+
