@@ -5,7 +5,7 @@ spring:
     password: 123456
     url: jdbc:mysql://127.0.0.1:3306/boot-security?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
   redis:
-    host: 1.14.75.82
+    host: 0.0.0.0
     password: xxxxxxx
     port: 6479
 mybatis-plus:
